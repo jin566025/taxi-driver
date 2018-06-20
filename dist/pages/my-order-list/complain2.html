@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css/common-83cde2ab50.css" />
+		<link rel="stylesheet" href="../../css/complain-83ed47b8a7.css" />
+	</head>
+	<body>
+		<div class="complain-content">
+			<div class="complain-type clearfix">
+				<div class="complain-types1">申诉类型</div>
+				<div class="complain-types2 complain-types2-active">申诉用户</div>
+				<div class="complain-types2">申诉平台</div>
+			</div>
+			<div class="complain-main">
+				<div class="complain-main-top">申诉内容</div>
+				<textarea class="complain-main-bottom" placeholder="请输入要申诉的内容......"></textarea>
+			</div>
+			<div class="complain-pic clearfix">
+				<div class="complain-pics box-sizing">+</div>
+				<div class="complain-pics box-sizing">+</div>
+				<div class="complain-pics box-sizing">+</div>
+			</div>
+			<p class="complain-tips">图片最多上传3张</p>
+		</div>
+		<div class="complain">确定申诉</div>
+		<script src="../../js/jquery-3-b36670e5ea.0.0.js"></script>
+		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script>
+		<script>
+			$(function(){
+				var complainWidth = $(".complain-pics").width();
+				$(".complain-pics").css({"height":complainWidth+"px","line-height":complainWidth+"px"})
+				$(".complain-types2").click(function(){
+					$(".complain-types2").removeClass("complain-types2-active");
+					$(this).addClass("complain-types2-active")
+				})
+			})
+		</script>
+	</body>
+</html>

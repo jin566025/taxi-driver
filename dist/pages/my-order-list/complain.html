@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css/common-83cde2ab50.css" />
+		<link rel="stylesheet" href="../../css/complain-83ed47b8a7.css" />
+		<style>
+			.datas{display: none;}
+		</style>
+	</head>
+	<body>
+		<form>
+		<input type="text" name="id" class="datas" id="data1" />
+		<input type="text" name="userId" class="datas" id="data2" />
+		<input type="text" name="usertype" class="datas" id="data3" />
+		<input type="text" name="content" class="datas" id="data4" />
+		
+		<input type="text" name="comlaintType" class="datas" id="data6" />
+		<div class="complain-content">
+			<div class="complain-type clearfix">
+				<div class="complain-types1">申诉类型</div>
+				<div class="complain-types2 complain-types2-active">申诉用户</div>
+				<div class="complain-types2">申诉平台</div>
+			</div>
+			<div class="complain-main">
+				<div class="complain-main-top">申诉内容</div>
+				<textarea id="complain-content" class="complain-main-bottom" placeholder="请输入要申诉的内容......"></textarea>
+			</div>
+			<div class="complain-pic clearfix">
+				<div class="complain-pics box-sizing">
+					<a>+</a>
+					<input name="img" id="upimg" type="file" />
+				</div>
+				<!--<div class="complain-pics box-sizing">+</div>
+				<div class="complain-pics box-sizing">+</div>-->
+			</div>
+			<!--<p class="complain-tips">图片最多上传3张</p>-->
+		</div>
+		<div class="complain">确定申诉</div>
+		</form>
+		<script src="../../js/jquery-3-b36670e5ea.0.0.js"></script>
+		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script>
+		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
+		<script>
+			$(function(){
+				var complainWidth = $(".complain-pics").width();
+				$(".complain-pics").css({"height":complainWidth+"px","line-height":complainWidth+"px"})
+				$(".complain-types2").click(function(){
+					$(".complain-types2").removeClass("complain-types2-active");
+					$(this).addClass("complain-types2-active")
+				})
+				
+				$("#upimg").change(function(){
+					var img_url = this.files[0];
+					var reader = new FileReader();
+					reader.onload = function(e){
+						$(".complain-pics").append('<img class="up-img" <img src="'+e.target.result+'" />')
+					}
+					reader.readAsDataURL(img_url);
+				})
+				$(".complain").click(function(){
+					var typeName = $(".complain-types2-active").text();
+					var content = $("#complain-content").val();
+					
+					var id = window.location.href.split("=")[1];
+					
+					$("#data1").val(id);
+					$("#data2").val(userId);
+					$("#data3").val(1);
+					$("#data4").val(content);
+					$("#data6").val(0);
+//					var driverId = window.location.href.split("=")[2];
+					var formData  = new FormData();
+					formData.append("id", $('input[name="id"]').val());
+					formData.append("userId", $('input[name="userId"]').val());
+					formData.append("usertype", $('input[name="usertype"]').val());
+					formData.append("content", $('input[name="content"]').val());
+					formData.append("img", $('input[name="img"]')[0].files[0]);
+					formData.append("comlaintType", $('input[name="comlaintType"]').val());
+					console.log(formData)
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/complaint.json",
+						data:formData,
+						dataType:"json",
+						processData : false,
+						contentType : false,
+						async:false,
+						success:function(data){
+							console.log(data)
+							if(data.msg=="成功"){
+								window.location.href="../../my-order-list.html"
+							}
+						},
+						error:function(xhr){
+							console.log(xhr)
+						}
+					});
+				})
+			})
+		</script>
+	</body>
+</html>

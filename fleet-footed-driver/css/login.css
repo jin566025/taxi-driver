@@ -1,0 +1,24 @@
+footer{width: 100%;bottom: 0;position: fixed;border-top: 1px solid gainsboro;}
+.footer-nav{width: 42%;font-size: 1.5rem;height: 4rem;line-height: 4rem;text-align: center;font-family: Arial ;color: gray;font-weight: bold;}
+.jp{height: 2rem;vertical-align: middle;}
+.footer-nav1{width: 16%;border-right: 1px solid gainsboro;}
+
+
+/*登陆页面*/
+.driver-login{width: 100%;height: 100%;background-color: #ffffff;}
+.driver-login-header{width: 100%;height: 4.4rem;line-height: 4.4rem;text-align: center;border-bottom: 1px solid darkgray;}
+.return-icon{position: absolute;left: 10px;height: 1.2rem;top: 1.4rem;}
+.title{color: rgba(16, 16, 16, 1);font-size:1.8rem;text-align: center;font-family: Arial;}
+.driver-login-banner{width: 100%;background-color: #E5E5E5;margin-bottom: 1rem;}
+.driver-login-banner img{width: 100%;}
+.driver-login-form-left{height: 4rem;line-height: 4rem;color: rgba(16, 16, 16, 1);font-size: 1.6rem;text-align: left;font-family: Microsoft Yahei;width:6rem ;}
+.driver-login-form-container,.tip{width: 96%;margin: 0 auto;}
+.driver-login-form-right{flex: 1;}
+.driver-login-form-right input{border: none;width: 100%;height: 4rem;line-height: 4rem;font-size: 1.3rem;}
+.send-yzm{font-size: 1.2rem;background-color: #FF9800;width: 10rem;text-align: center;height:2.8rem;line-height: 2.8rem;margin-top: 0.6rem;border-radius: 4px;color:#FFFFFF;font-family: Microsoft Yahei;}
+.login-btn{background-color: #FF9800;width: 100%;height:4rem;line-height:4rem;color:#FFFFFF;font-size: 1.4rem;text-align: center;font-family: Arial;margin-top: 1rem;}
+
+
+
+.disabled{pointer-events: none;cursor: default;opacity: 0.6;background-color: #111111}
+.tip{color: orangered;visibility: hidden;}

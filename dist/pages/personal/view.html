@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css/common-83cde2ab50.css" />
+		<link rel="stylesheet" href="../../css/list-deaed613b8.css" />
+		<link rel="stylesheet" href="../../css/iosSelect-6e182791d9.css" />
+		<link rel="stylesheet" href="../../css/personal-1e114ed9b9.css" />
+	</head>
+	<body>
+		<header style="border-bottom: 1px solid gainsboro;">
+			<img onclick="history.go(-1)" src="../../img/return.png" class="return-icon" />
+			<p>意见反馈</p>
+		</header>
+		
+		<div class="recharge-content">
+			<p>
+				<a>类型选择：</a>
+				<a id="showBank">
+					请选择
+				</a>
+			</p>
+			<p>
+				<a>申诉内容：</a>
+
+			</p>
+			<textarea class="views" placeholder="请填写任务的详细描述"></textarea>
+			<p>选择图片</p>
+			<div class="uppic">
+				<div class="add">+</div>
+				<input class="uppic-input" type="file" onchange="uppic(this)" />
+			</div>
+		</div>
+		
+		<div class="select">
+			<div class="pc-box">                     
+		        <input type="hidden" name="bank_id" id="bankId" value="">                     
+
+		    </div>  
+		</div>
+		<div class="footer2 clearfix">
+			<div class="footer2-left fl">提交</div>
+			<div class="footer2-right fr">取消</div>
+		</div>
+		<script type="text/javascript" src="../../js/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script>
+		<script type="text/javascript" src="../../js/iosSelect-5c7970a48b.js" ></script>
+		<script>
+			function uppic(file){
+				var reader = new FileReader();
+				reader.onload = function(e){
+				   //base64:e.target.result;
+				   $(".add").html("<img src="+e.target.result+" class='add-img' />")
+				}
+				reader.readAsDataURL(file.files[0]);
+				
+			}
+			function feedback(userId){
+				var typeName = $("#showBank").text();
+				if(!typeName){
+					alert("请选择类型");
+					return false;
+				}
+				var content = $(".views").val();
+				if(!content){
+					alert("请填写内容");
+					return false;
+				}
+				var img = $(".add-img").attr("src");
+				$.ajax({
+					type:"post",
+					url:url_path+"/common/feedback/save.json",
+					async:true,
+					data:{
+						"typeName":typeName,
+						"userType":1,
+						"content":content,
+						"img":img,
+						"userId":driverId
+					},
+					dataType:"json",
+					success:function(data){
+						console.log(data)
+					},
+					error:function(){}
+				});
+			}
+			$(".footer2-left").click(function(){
+				feedback(userId);
+			})
+			$(".footer2-right").click(function(){
+				window.location.href='../../personal.html'
+			})
+
+			var data = [
+			    {'id': '10001', 'value': '车辆故障'},
+			    {'id': '10002', 'value': '联系不到订单用户'},
+			    {'id': '10003', 'value': '系统出错'},
+			];
+			
+			var showBankDom = document.querySelector('#showBank');
+		    var bankIdDom = document.querySelector('#bankId');
+		    showBankDom.addEventListener('click', function () {
+		        var bankId = showBankDom.dataset['id'];
+		        var bankName = showBankDom.dataset['value'];
+		
+		        var bankSelect = new IosSelect(1, 
+		            [data],
+		            {
+		                container: '.container',
+		                title: '请选择取消订单理由',
+		                itemHeight: 50,
+		                itemShowCount: 3,
+		                oneLevelId: bankId,
+		                callback: function (selectOneObj) {
+		                    bankIdDom.value = selectOneObj.id;
+		                    showBankDom.innerHTML = selectOneObj.value;
+		                    showBankDom.dataset['id'] = selectOneObj.id;
+		                    showBankDom.dataset['value'] = selectOneObj.value;
+		                    console.log(selectOneObj)
+		                }
+		        });
+		    });
+		</script>
+	</body>
+</html>

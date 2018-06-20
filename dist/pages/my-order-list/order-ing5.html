@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css/common-83cde2ab50.css" />
+		<link rel="stylesheet" href="../../css/list-deaed613b8.css" />
+		<link rel="stylesheet" href="../../css/iosSelect-6e182791d9.css" />
+		<link rel="stylesheet" href="../../css/order-786485122a.css" />
+		<link rel="stylesheet" href="../../css/map-11e21d52ce.css" />
+	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Autocomplete,AMap.Driving"></script>
+	    <script type="text/javascript" src="../../js/map-c35636d2be.js" ></script>
+	</head>
+	<body>
+		<div id='container'></div>
+		<div id="tip" style="display: none;"></div>
+		
+		<div class="list-main section3">
+			
+			<div class="lists-content flex-box">
+				<div class="lists-left flex-box">
+					<div class="lists-left-price">
+						<a id="order-award" class="price"></a>
+					</div>
+					<div class="lists-left-detail">
+						
+						
+					</div>
+					<div id="order-type" class="type type3" style="padding: 0.2rem 0.4rem;border-radius: 5px;">包时代驾</div>
+				</div>
+				<div class="lists-right">
+					
+				</div>
+			</div>
+			<div class="start-end flex-box" style="margin-top: 2rem;">
+				<div class="start-end-left clearfix">
+					<div class="circle fl">
+						<a class="circles strat-circle"></a>
+					</div>
+					<div class="start-end-detail fl">
+						<div type="text"  id="tipinput" ></div>
+					</div>
+				</div>
+				<div class="start-end-right" id="position1"></div>
+			</div>
+			<div class="start-end flex-box">
+				<div class="start-end-left clearfix">
+					<div class="circle fl">
+						<a class="circles end-circle"></a>
+					</div>
+					<div style="font-size: 1.4rem;" class="start-end-detail fl" id="deliveryAddress"></div>
+				</div>
+				<div class="start-end-right" id="position2"></div>
+			</div>
+		</div>
+		
+		<div class="customer section2">
+			<div class="customer-top flex-box">
+				<div class="customer-img">
+					<img id="order-img" src="../../img/test.jpg" />
+				</div>
+				<div class="customer-content">
+					<p>
+						<a id="order-name" class="customer-name">小明</a>
+						<img  src="../../img/star.png" />
+						<a id="order-score">4.6</a>
+					</p>
+					<p id="order-number" class="phone-number">123456789</p>
+				</div>
+				<div class="customer-go">导航</div>
+			</div>
+			<div class="customer-bottom clearfix">
+				<div class="customer-navs customer-navs2 box-sizing">
+					<a id="customerTel">联系租客</a>
+				</div>
+				<div class="customer-navs customer-navs2 box-sizing complain">我要申诉</div>
+				<div class="customer-navs" id="showBank">取消订单</div>
+			</div>
+		</div>
+		<div class="submit">完成订单</div>
+		
+		
+		
+		<div class="confirm">
+			<p class="confirm-tip">是否完成订单</p>
+			<div class="confirm-container clearfix">
+				<div class="confirm-container-diolog box-sizing cancle">取消</div>
+				<div class="confirm-container-diolog sure">确认</div>
+			</div>
+		</div>
+		
+
+		<div class="select">
+			<div class="pc-box">                     
+		        <input type="hidden" name="bank_id" id="bankId" value="">                     
+
+		    </div>  
+		</div>
+		
+
+		<div class="shadow"></div>
+		<div id="panel" style="display: none;" ></div>
+		<div id="selectHide" style="display: none;"></div>
+		<script type="text/javascript" src="../../js/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script> 
+		<script type="text/javascript" src="../../js/swiper-1d74106378.js" ></script>
+		<script type="text/javascript" src="../../js/main-74ce595931.js" ></script>
+<!--		<script type="text/javascript" src="../../js/loadmap-187bdcfea7.js" ></script>-->
+		<script type="text/javascript" src="../../js/iosSelect-5c7970a48b.js" ></script>
+		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
+		<script type="text/javascript" src="../../js/order-ing-679806e785.js" ></script>
+		<script>
+			function ContentUp(){
+				$(".section3").css("bottom","19rem");
+				$(".section2").css("bottom","5rem")
+			}
+			function ContentDown(){
+				$(".section3").css("bottom","5rem");
+				$(".section2").css("bottom","-20rem")
+			}
+			$(function(){
+				orderDetail(url_path);
+				function orderDetail(url_path){
+					var id = window.location.href.split("=")[1];
+				    $.ajax({
+				    	type:"post",
+				    	url:url_path+"/mission/info.json",
+				    	data:{
+				    		"id":id
+				    	},
+				    	dataType:"json",
+						success:function(data){
+							console.log(data)
+							if(data.msg=="成功"){
+									if(data.state==3){
+										//已完成
+										$(".submit").hide();
+										$("#showBank").html("我要评价").attr("id","toAccess")
+									}else if(data.state==2){
+										
+									}
+									
+								
+									$("#order-award").html(data.setMealName);
+									$("#order-price").html(data.award)
+									$("#deliveryAddress").html(data.deliveryAddress);
+									$("#order-name").html(data.driverNickname);
+									$("#order-score").html(data.driverGrade);
+									$("#driverTel").attr("href","tel:"+data.driverTel+"");
+									if(data.taskAddress){
+										$("#tipinput").html(data.taskAddress);
+									}else{
+										$("#tipinput").html("如不填写，由司机决定");
+									}
+									$("#position2").html("当前位置："+data.deliveryAddress);
+									$("#order-img").attr("src",data.driverImgUrl)
+									$("#deliveryAddress").html(timeFormatter(data.pickupTime)+" 上车");
+									
+									var driverLng = sessionStorage.getItem("driverLng");
+									var driverLat = sessionStorage.getItem("driverLat");
+									var targetLat2 =  data.deliveryAddressLatitude;
+									var targetLng2 =  data.deliveryAddressLongitude;
+									var targetLat1 = data.taskAddressLatitude;
+									var targetLng1 = data.taskAddressLongitude;
+									driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1));
+									driving2.search(new AMap.LngLat(targetLng1, targetLat1), new AMap.LngLat(targetLng2, targetLat2));
+									setTimeout(function(){
+										var time = $(".planTitle p");
+										var distance1 = $(time[0]).text();
+										var distance2 = $(time[1]).text();
+					
+										var pattern =new RegExp("\\((.| )+?\\)","igm");
+										distance1 = distance1.match(pattern)
+										distance2 = distance2.match(pattern)
+										$("#position1").html(distance1);
+										
+									},500)
+								}
+							},
+							error:function(){}
+				    })
+			    }
+			})
+		</script>
+
+	</body>
+</html>

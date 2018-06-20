@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css/common-83cde2ab50.css" />
+		<link rel="stylesheet" href="../../css/list-deaed613b8.css" />
+		<link rel="stylesheet" href="../../css/order-786485122a.css" />
+		<link rel="stylesheet" href="../../css/map-11e21d52ce.css" />
+	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Autocomplete,AMap.Driving"></script>
+	    <script type="text/javascript" src="../../js/map-c35636d2be.js" ></script>
+	</head>
+	<body>
+		<div id='container'></div>
+		<div id="tip" style="display: none;"></div>
+		
+		<div class="list-main">
+			<div class="dianzi">
+				<p>
+					<a>￥</a>
+					<a class="lists-right2-price" id="order-award"></a>
+				</p>
+				<p id="type-str2"></p>
+			</div>
+			<div class="lists-content flex-box">
+				<div class="lists-left flex-box">
+					<div class="lists-left-price">
+						<a class="fuhao">￥</a>
+						<a id="order-price" class="price"></a>
+					</div>
+					<div class="lists-left-detail">
+						<div class="lists-left-detail-top" id="order-typeStr"></div>
+						<br />
+						<div class="type" id="order-type"></div>
+					</div>
+				</div>
+				<div class="lists-right"></div>
+			</div>
+			<div class="start-end flex-box">
+				<div class="start-end-left clearfix">
+					<div class="circle fl">
+						<a class="circles strat-circle"></a>
+					</div>
+					<div class="start-end-detail fl">
+						<input type="text"  id="tipinput" disabled="disabled" />
+
+					</div>
+				</div>
+				<div class="start-end-right" id="position1"></div>
+			</div>
+			<div class="start-end flex-box">
+				<div class="start-end-left clearfix">
+					<div class="circle fl">
+						<a class="circles end-circle"></a>
+					</div>
+					<div class="start-end-detail fl" id="deliveryAddress"></div>
+				</div>
+				<div class="start-end-right" id="position2"></div>
+			</div>
+		</div>
+		
+		<div class="customer">
+			<div class="customer-top flex-box">
+				<div class="customer-img">
+					<img src="../../img/test.jpg" />
+				</div>
+				<div class="customer-content">
+					<p>
+						<a id="order-name" class="customer-name"></a>
+						<img src="../../img/star.png" />
+						<a id="order-score"></a>
+					</p>
+					<p id="order-number" class="phone-number"></p>
+				</div>
+				<div class="customer-go">导航</div>
+			</div>
+			<div class="customer-bottom">
+				联系租客
+			</div>
+		</div>
+		<div class="submit">接单</div>
+		
+		
+		<div class="shadow"></div>
+		<div class="confirm">
+			<p class="confirm-tip">是否确认接单</p>
+			<div class="confirm-container clearfix">
+				<div class="confirm-container-diolog box-sizing cancle">取消</div>
+				<div class="confirm-container-diolog sure" id="sure">确认</div>
+			</div>
+		</div>
+		
+		
+		<div id="panel" style="display: none;" ></div>
+		<script type="text/javascript" src="../../js/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script>
+		<script type="text/javascript" src="../../js/swiper-1d74106378.js" ></script>
+		<script type="text/javascript" src="../../js/main-74ce595931.js" ></script>
+		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
+		<script type="text/javascript" src="../../js/order-detail-map-08a67562ab.js" ></script>
+		<script>
+			$(function(){
+				$("#sure").click(function(){
+					var taskId = window.location.href.split("=")[1];
+					takeTask(url_path,taskId,driverId);
+				})
+				$(".cancle").click(function(){
+					$(".confirm").fadeOut();
+					$(".shadow").fadeOut();
+				})
+				function takeTask(url_path,taskId,driverId){
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/take.json",
+						data:{
+							"id":taskId,
+							"driverId":driverId
+						},
+						async:true,
+						dataType:"json",
+						success:function(data){
+							console.log(data);
+							if(data.msg == "成功"){
+								window.location.href='../../my-order-list.html'
+							}
+						},
+						error:function(){}
+					});
+				}
+				orderDetail(url_path);
+				function orderDetail(url_path){
+					var id = window.location.href.split("=")[1];
+				    $.ajax({
+				    	type:"post",
+				    	url:url_path+"/mission/info.json",
+				    	data:{
+				    		"id":id
+				    	},
+				    	dataType:"json",
+						success:function(data){
+							console.log(data)
+							if(data.msg=="成功"){
+								var type_str,type_str2,dianzi_cls,price,price2,type_cls,goods_type;
+								if(data.typeId==1){
+									type_str="取送件";
+									type_str2 = "红包";
+									dianzi_cls = "dianzi3";
+									price2 = data.finish;
+									price = data.award;
+									type_cls = "type1";
+									goods_type = data.goodsType
+								}else if(data.typeId==2){
+									type_str="代购";
+									type_str2 = "垫资资金";
+									dianzi_cls = "dianzi2";
+									price2 = data.matmoney;
+									price = data.matmoney;
+									type_cls = "type2";
+									goods_type = data.message
+								}else if(data.typeId==3){
+									type_str="打车";
+									type_str2="";
+									dianzi_cls = " "
+									$(".dianzi").hide();
+									price="";
+									price2 = "";
+									type_cls = "type3";
+									goods_type = "";
+									$("#order-typeStr").hide();
+									$("br").hide()
+								}
+
+								$(".dianzi").addClass(dianzi_cls);
+
+								$("#type-str2").html(type_str2);
+								$("#order-type").html(type_str);
+								$("#order-typeStr").html(goods_type);
+								$("#order-price").html(price2);
+								$("#order-award").html(price);
+								var deliveryAddress = data.deliveryAddress;
+								if(deliveryAddress){
+									deliveryAddress = data.deliveryAddress;
+								}else{
+									deliveryAddress="如不填写，由司机决定"
+								}
+								$("#deliveryAddress").html(data.taskAddress);
+								$("#order-name").html(data.driverNickname);
+								$("#tipinput").val(deliveryAddress);
+								$("#order-score").html(data.driverGrade);
+								$("#type-str3").html(data.message);
+								$("#order-type").addClass(type_cls);
+								var driverLng = sessionStorage.getItem("driverLng");
+								var driverLat = sessionStorage.getItem("driverLat");
+								var targetLat1 =  data.deliveryAddressLatitude;
+								var targetLng1 =  data.deliveryAddressLongitude;
+								
+								var targetLat2 = data.taskAddressLatitude;
+								var targetLng2 = data.taskAddressLongitude;
+								driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1));
+    							driving2.search(new AMap.LngLat(targetLng1, targetLat1), new AMap.LngLat(targetLng2, targetLat2));
+    							setTimeout(function(){
+    								var time = $(".planTitle p");
+									var distance1 = $(time[0]).text();
+									var distance2 = $(time[1]).text();
+
+									var pattern =new RegExp("\\((.| )+?\\)","igm");
+									distance1 = distance1.match(pattern)
+									distance2 = distance2.match(pattern)
+									$("#position1").html(distance1);
+									$("#position2").html(distance2);
+    							},500)
+								
+							}
+						},
+						error:function(){}
+				    })
+				}
+				
+			})
+		</script>
+	</body>
+</html>

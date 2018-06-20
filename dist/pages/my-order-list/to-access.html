@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css/common-83cde2ab50.css" />
+		<link rel="stylesheet" href="../../css/complain-83ed47b8a7.css" />
+	</head>
+	<body>
+		<div class="complain-content">
+			<div class="complain-type clearfix">
+				<div class="complain-types1">评价星级</div>
+				<div class="complain-types3">
+					<img class="star-assess" src="../../img/star-assess2.png" />
+					<img class="star-assess" src="../../img/star-assess2.png" />
+					<img class="star-assess" src="../../img/star-assess2.png" />
+					<img class="star-assess" src="../../img/star-assess2.png" />
+					<img class="star-assess" src="../../img/star-assess2.png" />
+				</div>
+				
+			</div>
+			<div class="complain-main">
+				<div class="complain-main-top">评价内容</div>
+				<textarea class="complain-main-bottom" placeholder="请输入要评价的内容......"></textarea>
+			</div>
+
+		</div>
+		<div class="complain">确定评价</div>
+		<script type="text/javascript" src="../../js/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script>
+		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
+		<script>
+			$(function(){
+				$(".star-assess").click(function(){
+					var index = $(this).index()+1;
+					var star = $(".star-assess")
+					for(var i=0;i<star.length;i++){
+						if(i<index){
+							$(star[i]).attr("src","../../img/star-assess.png").addClass("star-active");
+						}else{
+							$(star[i]).attr("src","../../img/star-assess2.png").removeClass("star-active");
+						}
+					}
+				})
+				$(".complain").click(function(){
+					var id = window.location.href.split("=")[1];
+					var star = $(".star-active").length;
+					var content = $(".complain-main-bottom").val();
+					console.log(id,driverId,star,content)
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/commentary.json",
+						async:true,
+						data:{
+							"id":id,
+							"driverId":driverId,
+							"star":star,
+							"content":content,
+							"usertype":1
+						},
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							if(data.msg=="成功"){
+								alert("评价成功")
+								window.location.href="../../my-order-list.html"
+							}
+						},
+						error:function(xhr){
+							console.log(xhr)
+						}
+					});
+				})
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+.list{width: 94%;margin: 0 auto;}
+.list-time{font-size: 1.4rem;height: 2.6rem;line-height: 2.6rem;border-radius: 5px;background-color: rgba(0, 0, 0, 0.3);text-align: center;color: #FFFFFF;width: 50%;margin: 1rem auto;padding: 0 5px;}
+.lists-left{flex: 1;align-items: center;}
+.lists-right{border-top-right-radius: 10px;border-bottom-left-radius: 10px;padding: 5px 0.5rem;}
+.lists-right2{background-color: #2B98FC;}
+.lists-right3{background-color: #FF4747;}
+.lists-right4{display: none;}
+.lists-right p{text-align: center;color: rgba(209, 236, 255, 1);font-family: Arial;padding:0.5rem 0 ;}
+.lists-right p a{vertical-align: middle;}
+.lists-right2-price{font-size: 2.4rem;}
+.lists-left-price{padding-right: 20px;}
+.lists-left-price a{color: #FF9800;font-family: Arial;vertical-align: middle;}
+.fuhao{font-size: 1.6rem;}
+.price{font-size: 2.8rem;}
+.lists-left-detail {flex: 1;}
+.lists-left-detail div{padding: 3px 6px;border-radius: 4px;;font-family: Microsoft Yahei;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.lists-left-detail-top{margin-bottom: 6px;background-color: #DCDCDC;color: #646464;max-width: 10rem;}
+.type{color:#FFFFFF ;}
+.start-end{margin-top: 20px;}
+.start-end-left{flex: 1;align-items: center;}
+.circle{width: 8%;}
+.circles{width: 10px;height: 10px;border-radius: 50%;vertical-align: middle;display: inline-block;margin-right: 1rem;}
+.start-end-detail{width: 90%;color: rgba(100, 100, 100, 1);font-family: Arial;}
+.start-end-right{color: rgba(50, 50, 50, 1);text-align: right;font-family: Arial;font-size: 1.2rem;padding: 0 0.5rem;}
+.lists-content{margin-top: 2rem;}
+.strat-circle{background-color: #2B98FC}
+.end-circle{background-color: #F2DB0C}
+
+.type1{background-color: #2688BF}
+.type2{background-color: #21B854}
+.type3{background-color: #E68125}
+.type4{background-color: #FF9800}
+.footer-zanwei{width: 100%;height: 5.6rem;}
+footer{height:4.6rem;position: fixed;width: 100%;bottom: 0;border-top: 1px solid gainsboro;background-color: #FFFFFF}
+.footer-nav{width: 33.3%;text-align: center;font-family: Microsoft Yahei;}
+.footer-nav-icon{height: 2rem;margin-top: 0.4rem;}
+.footer-nav-name{height: 1.8rem;font-size: 1.4rem;}
+.footer-nav-name-active{color: rgba(255, 152, 0, 1);}
+
+.start-end-detail{position: relative;font-size: 1.6rem;}
+#tipinput2{position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index: -1;border: none;}
+.nomore{padding: 1rem 0;width: 100%;text-align: center;font-size: 1.4rem;}
+
+.type,.lists-left-detail-top{display: inline-block;font-size: 1.2rem;}
+.hide_cls{display: none;}
+
+#shadow{width: 100%;height: 100%;position: fixed;top: 0;left: 0;background: rgba(0,0,0,0.7);z-index: 10;}
+#getAddress{display: inline-block;position: fixed;z-index: 11;color: #FFFFFF;font-size: 1.4rem;text-align: center;}
+.loading{height: 4rem;margin-bottom: 1rem;}
+.list-main{margin-top: 2rem;}
+.font2{font-size: 1.8rem;}

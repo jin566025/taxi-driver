@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/login.css" />
+	</head>
+	<body>
+		<div class="driver-login">
+			<div class="driver-login-header">
+				<img class="return-icon" src="img/return.png" />
+				<p class="title">登录</p>
+			</div>
+			<div class="driver-login-banner">
+				<img src="img/banner.jpeg" />
+			</div>
+			<div class="driver-login-form">
+				<div class="driver-login-form-container flex-box">
+					<div class="driver-login-form-left">手机号</div>
+					<div class="driver-login-form-right">
+						<input type="number" id="username" placeholder="请输入手机号" />
+					</div>
+				</div>
+				<p id="tips1" class="tip">&nbsp;</p>
+				<div class="driver-login-form-container flex-box">
+					<div class="driver-login-form-left">验证码</div>
+					<div class="driver-login-form-right">
+						<input id="ymz" type="number" placeholder="请输入验证码" />
+					</div>
+					<div class="send-yzm" id="send-yzm">点击发送验证码</div>
+				</div>
+				<p id="tips2" class="tip">&nbsp;</p>
+			</div>
+			<div class="login-btn">登录</div>
+		</div>
+		<script src="js/jquery-3.0.0.js"></script>
+		<script src="js/url.js"></script>
+		<script type="text/javascript" src="js/driver-login.js" ></script>
+	</body>
+</html>

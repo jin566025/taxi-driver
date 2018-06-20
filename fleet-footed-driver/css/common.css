@@ -1,0 +1,18 @@
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,
+form,fieldset,legend,button,input,textarea,th,td  {margin:0;padding:0;box-sizing: content-box;}
+ul,ol{list-style:none;}
+a{text-decoration:none;}
+a:hover{text-decoration:none;}
+fieldset,img{border:0;}
+table{border-collapse:collapse;border-spacing:0;}
+input{outline:none}
+body,html{font-size: 62.5%;}
+.clearfix:before, .clearfix:after{content: " "; display: table; clear: both;}
+.fl{float: left;}
+.fr{float: right;}
+.absolute-center{top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);-moz-transform:  translateX(-50%) translateY(-50%);-webkit-transform: translateX(-50%) translateY(-50%);-ms-transform: translateX(-50%) translateY(-50%);position: absolute;}
+.flex-box{display: -webkit-box; display: -moz-box; display: -moz-flex; display: -ms-flexbox; display: -webkit-flex; display: flex;}
+.box-sizing{box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -webkit-box-sizing: border-box; -ms-box-sizing: border-box;}
+
+
+

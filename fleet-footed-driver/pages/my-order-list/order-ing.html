@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css/common.css" />
+		<link rel="stylesheet" href="../../css/list.css" />
+		<link rel="stylesheet" href="../../css/iosSelect.css" />
+		<link rel="stylesheet" href="../../css/order.css" />
+		<link rel="stylesheet" href="../../css/map.css" />
+		
+	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d"></script>
+	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Autocomplete,AMap.Driving"></script>
+	    <script type="text/javascript" src="../../js/map.js" ></script>
+	</head>
+	<body>
+		<div id='container'></div>
+		<div id="tip" style="display: none;"></div>
+		
+		<div class="list-main">
+			<div class="dianzi">
+				<p>
+					<a>￥</a>
+					<a id="order-price" class="lists-right2-price">45</a>
+				</p>
+				<p id="type-str2">垫资资金</p>
+			</div>
+			<div class="lists-content flex-box">
+				<div class="lists-left flex-box">
+					<div class="lists-left-price">
+						<a class="fuhao">￥</a>
+						<a id="order-award" class="price">20</a>
+					</div>
+					<div class="lists-left-detail">
+						<div id="type-str3" class="lists-left-detail-top">帮我买一包软壳中华香烟</div>
+						<br />
+						<div id="order-type" class="type">代购</div>
+					</div>
+				</div>
+				<div class="lists-right">
+					
+				</div>
+			</div>
+			<div class="start-end flex-box">
+				<div class="start-end-left clearfix">
+					<div class="circle fl">
+						<a class="circles strat-circle"></a>
+					</div>
+					<div class="start-end-detail fl">
+						<input type="text" placeholder="请输入关键字进行搜索" id="tipinput" disabled="disabled">
+					</div>
+				</div>
+				<div class="start-end-right" id="position1"></div>
+			</div>
+			<div class="start-end flex-box">
+				<div class="start-end-left clearfix">
+					<div class="circle fl">
+						<a class="circles end-circle"></a>
+					</div>
+					<div class="start-end-detail fl" id="deliveryAddress">宁波市江北区宁波帝豪汽车销售服务有限公司二楼财务室</div>
+				</div>
+				<div class="start-end-right" id="position2"></div>
+			</div>
+		</div>
+		
+		<div class="customer">
+			<div class="customer-top flex-box">
+				<div class="customer-img">
+					<img id="order-img" src="../../img/test.jpg" />
+				</div>
+				<div class="customer-content">
+					<p>
+						<a id="order-name" class="customer-name">小明</a>
+						<img  src="../../img/star.png" />
+						<a id="order-score">4.6</a>
+					</p>
+					<p id="order-number" class="phone-number">123456789</p>
+				</div>
+				<div class="customer-go">导航</div>
+			</div>
+			<div class="customer-bottom clearfix">
+				<div class="customer-navs customer-navs2 box-sizing">联系租客</div>
+				<div class="customer-navs customer-navs2 box-sizing complain">我要申诉</div>
+				<div class="customer-navs" id="showBank">取消订单</div>
+			</div>
+		</div>
+		<div class="submit">完成订单</div>
+		
+		
+		
+		<div class="confirm">
+			<p class="confirm-tip">是否完成订单</p>
+			<div class="confirm-container clearfix">
+				<div class="confirm-container-diolog box-sizing cancle">取消</div>
+				<div class="confirm-container-diolog sure">确认</div>
+			</div>
+		</div>
+		
+
+		<div class="select">
+			<div class="pc-box">                     
+		        <input type="hidden" name="bank_id" id="bankId" value="">                     
+
+		    </div>  
+		</div>
+		
+
+		<div class="shadow"></div>
+		<div id="panel" style="display: none;" ></div>
+		<div id="selectHide" style="display: none;"></div>
+		<script type="text/javascript" src="../../js/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="../../js/secondCheck.js" ></script> 
+		<script type="text/javascript" src="../../js/swiper.js" ></script>
+		<script type="text/javascript" src="../../js/main.js" ></script>
+<!--		<script type="text/javascript" src="../../js/loadmap.js" ></script>-->
+		<script type="text/javascript" src="../../js/iosSelect.js" ></script>
+		<script type="text/javascript" src="../../js/url.js" ></script>
+		<script type="text/javascript" src="../../js/order-ing.js" ></script>
+		<script>
+			var data = [
+			    {'id': '10001', 'value': '车辆故障'},
+			    {'id': '10002', 'value': '联系不到订单用户'},
+			    {'id': '10003', 'value': '系统出错'},
+			];
+			//我要申诉
+			$(".complain").click(function(){
+				var taskId = $(".complain").data("id");
+				window.location.href="complain.html?id="+taskId
+			})
+			$(".cancle").click(function(){
+				$(".shadow,.confirm").fadeOut(500);
+			})
+			$(".sure").click(function(){
+				var taskId = $(".complain").data("id");
+				$.ajax({
+					type:"post",
+					url:url_path+"/mission/driver/ok.json",
+					async:true,
+					data:{
+						"id":taskId,
+						"driverId":driverId
+					},
+					dataType:"json",
+					success:function(data){
+						if(data.msg=="成功"){
+							window.location.href="../../my-order-list.html"
+						}
+					},
+					error:function(){}
+				});
+			})
+			var showBankDom = document.querySelector('#showBank');
+		    var bankIdDom = document.querySelector('#bankId');
+		    showBankDom.addEventListener('click', function () {
+		        var bankId = showBankDom.dataset['id'];
+		        var bankName = showBankDom.dataset['value'];
+		
+		        var bankSelect = new IosSelect(1, 
+		            [data],
+		            {
+		                container: '.container',
+		                title: '请选择取消订单理由',
+		                itemHeight: 50,
+		                itemShowCount: 3,
+		                oneLevelId: bankId,
+		                callback: function (selectOneObj) {
+		                    bankIdDom.value = selectOneObj.id;
+		                    showBankDom.innerHTML = "取消订单";
+		                    showBankDom.dataset['id'] = selectOneObj.id;
+		                    showBankDom.dataset['value'] = selectOneObj.value;
+		                    $("#selectHide").html(selectOneObj.value)
+		                }
+		        });
+		    });
+		    
+		   
+		</script>
+	</body>
+</html>

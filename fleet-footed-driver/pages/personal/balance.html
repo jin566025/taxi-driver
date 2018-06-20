@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css/common.css" />
+		<link rel="stylesheet" href="../../css/list.css" />
+		<link rel="stylesheet" href="../../css/personal.css" />
+	</head>
+	<body>
+		<header>
+			<img onclick="history.go(-1)" src="../../img/return.png" class="return-icon" />
+			<p>我的余额</p>
+		</header>
+		<div class="balance-content">
+			<div class="balance-circle">
+				<p class="balance-p1">Blance</p>
+				<p class="balance-p2">余额</p>
+				<p class="balance-p3">￥</p>
+				<p class="balance-p4"></p>
+				<div class="balance-submit">提现</div>
+			</div>
+			<div class="balance-detail">
+				<p class="balance-title">条款明细</p>
+				
+			</div>
+			
+			<p class="nomore hasmore">没有更多数据</p>
+			
+		</div>
+		
+		<div class="shadow"></div>
+		<div class="dialog absolute-center">
+			<p class="dialog-title">提现金额</p>
+			<input class="dialog-input" type="text" placeholder="请输入金额"/>
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 fl box-sizing">取消</div>
+				<div class="dialog-btns dialog-btns2 fl">确认</div>
+			</div>
+		</div>
+		<div class="footer-zanwei"></div>
+		<div class="footer">立即充值</div>
+		
+		<script type="text/javascript" src="../../js/jquery-3.0.0.js" ></script>
+
+		<script type="text/javascript" src="../../js/secondCheck.js" ></script>
+		<script type="text/javascript" src="../../js/url.js" ></script>
+		<script>
+			$(function(){
+				$(".balance-submit").click(function(){
+					$(".shadow,.dialog").fadeIn(500)
+				})
+				$(".dialog-btns").click(function(){
+					$(".shadow,.dialog").fadeOut(500)
+				})
+				
+				var pageNo = 1;
+				var pageSize = 10;
+				loadAccountStream(driverId,pageNo,pageSize);
+				
+				$(window).scroll(function(){
+					if($(window).scrollTop() + $(window).height() >= $(document).height() ){
+						if($(".nomore").hasClass("hasmore")){
+							pageNo = pageNo+1;
+							loadAccountStream(driverId,pageNo,pageSize);
+						}
+					}
+				})
+				function loadAccountStream(driverId,pageNo,pageSize){
+					$.ajax({
+						type:"post",
+						url:url_path+"/driver/accountstream.json",
+						async:true,
+						data:{
+							"driverId":driverId,
+							"pageNo":pageNo,
+							"pageSize":pageSize
+						},
+						dataType:"json",
+						success:function(data){
+							if(data.stateCode==0){
+								console.log(data)
+								$(".balance-p4").html(data.balance)
+								var listDTO = data.listDTO;
+								if(listDTO.length!==10){
+									$(".nomore").html("---加载完毕---").removeClass("hasmore")
+								}
+								for(var i=0;i<listDTO.length;i++){
+									var html = '<div class="detail-content flex-box">'+
+													'<div class="detail-content-left">'+
+														'<p class="cash">'+listDTO[i].typeName+'</p>'+
+														'<p class="cash-time">'+listDTO[i].createtime+'</p>'+
+													'</div>'+
+													'<div class="detail-content-mid">'+listDTO[i].typeName+'</div>'+
+													'<div class="detail-content-right">'+listDTO[i].money+'</div>'+
+												'</div>';
+									$(".balance-detail").append(html);
+								}
+							}
+						},
+						error:function(){}
+					});
+				}
+				
+			})
+		</script>
+	</body>
+</html>

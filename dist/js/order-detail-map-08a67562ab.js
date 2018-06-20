@@ -1,0 +1,1 @@
+var map,geolocation;map=new AMap.Map("container",{resizeEnable:!0});var driving=new AMap.Driving({map:map,panel:"panel"}),driving2=new AMap.Driving({map:map,panel:"panel"});

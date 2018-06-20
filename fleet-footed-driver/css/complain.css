@@ -1,0 +1,21 @@
+
+.complain-content{width: 96%;margin: 0 auto;}
+.complain-type{width: 100%;height: 4rem;line-height: 4rem;}
+.complain-type div{display: inline-block;font-size:1.2rem;font-family: Arial;}
+.complain-types1{margin-right: 2rem;}
+.complain-types2{margin-left: 1rem;font-size: 1.2rem;height: 2rem;line-height: 2rem;padding: 0 10px;border-radius: 4px;color: rgba(150, 150, 150, 1);font-family: Microsoft Yahei;border: 1px solid rgba(220, 220, 220, 1);}
+.complain-types2-active{background-color: #FF9800;border: none;color: #FFFFFF;}
+
+.complain-main-top{color:#323232;font-size:1.2rem;text-align: left;font-family: Arial;margin-bottom: 1rem;}
+.complain-main-bottom{width: 100%;border: none;resize: none;height: 6rem;padding: 5px 0;}
+.complain-pics{width:32%;float: left;margin-right: 2%;text-align: center;font-size: 4rem;border: 1px solid gainsboro;color: darkgray;}
+.complain-pics:last-child{margin-right: 0;}
+.complain-tips{color: rgba(200, 200, 200, 1);font-size: 1rem;text-align: left;font-family: Arial;margin-top: 1.5rem;}
+.complain{position: fixed;bottom: 0;color: rgba(50, 50, 50, 1);font-size:1.4rem;text-align: center;font-family: Arial;border: 1px solid rgba(255, 255, 255, 1);height:4rem;line-height: 4rem;background-color: #FF9800;width: 100%;color: #FFFFFF;}
+
+.star-assess{height: 1.6rem;vertical-align: middle;margin-right: 1rem;}
+
+.complain-pics{position: relative;}
+.uppic{width: 100%;height: 100%;opacity: 0;position: absolute;top: 0;z-index: 5;left: 0;top: 0;}
+.add,.add-img{width: 100%;height: 100%;}
+.up-img{width: 100%;height: 100%;position: absolute;top: 0;z-index: 4;left: 0;}
