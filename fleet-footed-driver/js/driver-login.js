@@ -50,6 +50,7 @@ if(!driverId){
 	getCode();
 }
 var driverHasLogin = localStorage.getItem("driverHasLogin");
+var openid = localStorage.getItem("openid");
 if(driverHasLogin && openid){
 	window.location.href="index2.html"
 }
