@@ -25,7 +25,7 @@
 			<div class="personal-navs" id="tel"><a style="color: rgba(50, 50, 50, 1);" href="tel:13575546447">客服热线</a></div>
 			<div class="personal-navs" onclick="window.location.href='pages/personal/view.html'">意见反馈</div>
 			<div class="personal-navs" onclick="window.location.href='pages/personal/questions.html'">常见问题</div>
-			<div class="personal-navs personal-navs-active">退出登录</div>
+			<div class="personal-navs personal-navs-active" onclick="logout()">退出登录</div>
 		</div>
 		
 		<div class="footer-zanwei"></div>
@@ -58,6 +58,13 @@
 		<script type="text/javascript" src="js/main.js" ></script>
 		<script type="text/javascript" src="js/url.js" ></script>
 		<script>
+			function logout(){
+				localStorage.removeItem("driverId");
+				localStorage.removeItem("openid");
+				localStorage.removeItem("driverHasLogin");
+				localStorage.removeItem("token");
+				window.location.href="index.html";
+			}
 			$(function(){
 //				$("#tel").click(function(){
 //					$(".shadow,.dialog").fadeIn(500)

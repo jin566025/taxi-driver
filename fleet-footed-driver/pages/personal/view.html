@@ -7,7 +7,7 @@
 		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="../../css/common.css" />
 		<link rel="stylesheet" href="../../css/list.css" />
-		<link rel="stylesheet" href="../../css/iosSelect.css" />
+
 		<link rel="stylesheet" href="../../css/personal.css" />
 	</head>
 	<body>
@@ -17,21 +17,16 @@
 		</header>
 		
 		<div class="recharge-content">
+			
 			<p>
-				<a>类型选择：</a>
-				<a id="showBank">
-					请选择
-				</a>
-			</p>
-			<p>
-				<a>申诉内容：</a>
+				<a>意见内容：</a>
 
 			</p>
-			<textarea class="views" placeholder="请填写任务的详细描述"></textarea>
+			<textarea class="views" name="content" placeholder="请填写详细描述"></textarea>
 			<p>选择图片</p>
 			<div class="uppic">
 				<div class="add">+</div>
-				<input class="uppic-input" type="file" onchange="uppic(this)" />
+				<input class="uppic-input" name="img" type="file" onchange="uppic(this)" />
 			</div>
 		</div>
 		
@@ -45,10 +40,23 @@
 			<div class="footer2-left fl">提交</div>
 			<div class="footer2-right fr">取消</div>
 		</div>
+		<input type="hidden" name="userType" id="userType" value="0" />
+		<input type="hidden" name="userId" id="userId" />
 		<script type="text/javascript" src="../../js/jquery-3.0.0.js" ></script>
 		<script type="text/javascript" src="../../js/secondCheck.js" ></script>
-		<script type="text/javascript" src="../../js/iosSelect.js" ></script>
+		<script type="text/javascript" src="../../js/url.js" ></script>
 		<script>
+			$(function(){
+				var userId = localStorage.getItem("driverId");
+				$("#userId").val(userId);
+				
+				$(".footer2-left").click(function(){
+					feedback();
+				})
+				$(".footer2-right").click(function(){
+					window.location.href='../../personal.html'
+				})
+			})
 			function uppic(file){
 				var reader = new FileReader();
 				reader.onload = function(e){
@@ -59,71 +67,36 @@
 				
 			}
 			function feedback(userId){
-				var typeName = $("#showBank").text();
-				if(!typeName){
-					alert("请选择类型");
-					return false;
-				}
+
 				var content = $(".views").val();
 				if(!content){
 					alert("请填写内容");
 					return false;
 				}
-				var img = $(".add-img").attr("src");
+				var formData  = new FormData();
+				formData.append("content", $('textarea[name="content"]').val());
+				formData.append("userType", $('input[name="userType"]').val());
+				formData.append("img", $('input[name="img"]')[0].files[0]);
+				formData.append("userId", $('input[name="userId"]').val());
 				$.ajax({
 					type:"post",
 					url:url_path+"/common/feedback/save.json",
-					async:true,
-					data:{
-						"typeName":typeName,
-						"userType":1,
-						"content":content,
-						"img":img,
-						"userId":driverId
-					},
+					processData : false,
+					contentType : false,
+					async:false,
+					data:formData,
 					dataType:"json",
 					success:function(data){
 						console.log(data)
+						if(data.stateCode==0){
+							alert(data.msg)
+							history.go(-1)
+						}
 					},
-					error:function(){}
+					error:function(xhr){console.log(xhr)}
 				});
 			}
-			$(".footer2-left").click(function(){
-				feedback(userId);
-			})
-			$(".footer2-right").click(function(){
-				window.location.href='../../personal.html'
-			})
 
-			var data = [
-			    {'id': '10001', 'value': '车辆故障'},
-			    {'id': '10002', 'value': '联系不到订单用户'},
-			    {'id': '10003', 'value': '系统出错'},
-			];
-			
-			var showBankDom = document.querySelector('#showBank');
-		    var bankIdDom = document.querySelector('#bankId');
-		    showBankDom.addEventListener('click', function () {
-		        var bankId = showBankDom.dataset['id'];
-		        var bankName = showBankDom.dataset['value'];
-		
-		        var bankSelect = new IosSelect(1, 
-		            [data],
-		            {
-		                container: '.container',
-		                title: '请选择取消订单理由',
-		                itemHeight: 50,
-		                itemShowCount: 3,
-		                oneLevelId: bankId,
-		                callback: function (selectOneObj) {
-		                    bankIdDom.value = selectOneObj.id;
-		                    showBankDom.innerHTML = selectOneObj.value;
-		                    showBankDom.dataset['id'] = selectOneObj.id;
-		                    showBankDom.dataset['value'] = selectOneObj.value;
-		                    console.log(selectOneObj)
-		                }
-		        });
-		    });
 		</script>
 	</body>
 </html>
