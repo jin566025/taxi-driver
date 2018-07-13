@@ -9,7 +9,7 @@ function getCodeReturn(){
 				var appId = data.appId;
 				var appSecret = data.appSecret;
 				var code = sessionStorage.getItem("code");
-				console.log(code)
+				localStorage.setItem("appId",appId);
 				if(!code){
 					window.location.href ="http://taxicustomer.nbzhidun.com/get-weixin-code.html?appid="+appId+"&scope=snsapi_base&state=hello-world&redirect_uri=http%3a%2f%2ftaxidriver.nbzhidun.com%2findex.html"
 				}
@@ -59,7 +59,8 @@ if(driverHasLogin && openid){
 function login(url){
 	var username = $("#username").val();
 	var validateCode = $("#ymz").val();
-	console.log(isPhoneNo(username))
+	console.log(username)
+	console.log(validateCode)
 	if(!isPhoneNo(username)){
 		$("#tips1").css("visibility","visible").html("请输入正确的手机号码")
 	}else if(validateCode==""){

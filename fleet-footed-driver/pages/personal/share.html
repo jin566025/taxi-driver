@@ -86,60 +86,60 @@
 							$("#timestamp").html(data.resInfo.timeStamp);
 							$("#nonceStr").html(data.resInfo.nonceStr);
 							$("#signature").html(data.resInfo.signature);
-							wxstart(data.resInfo, "http://taxicustomer.nbzhidun.com/pages2/personal/share.html");
+						
+							
+							var appid2 = localStorage.getItem("appId");
+							var timestamp2 = data.resInfo.timestamp;
+							var nonceStr2 = data.resInfo.nonceStr;
+							var signature2 = data.resInfo.signature;
+							//wxstart(dataArray, "http://taxicustomer.nbzhidun.com/index.html");
+							wx.config({
+						        debug: false,
+						        appId: appid2, // 必填，公众号的唯一标识
+						        timestamp: timestamp2, // 必填，生成签名的时间戳
+						        nonceStr: nonceStr2, // 必填，生成签名的随机串
+						        signature: signature2,// 必填，签名，见附录1
+						        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+						    });
+						    wx.ready(function(){
+						        var imgurl = $("#erweima").attr("src");
+						        var title = 'taxi跑腿平台';
+						        var desc = 'taxi跑腿平台,取送件、代购、打车、代驾';
+						         var url2 = "http://taxicustomer.nbzhidun.com/index.html?userOpenid="+openid+"?type=2";
+						        wx.onMenuShareTimeline({
+						            title: title, // 分享标题
+						            desc: desc, // 分享描述
+						            link: url2, // 分享链接
+						            imgUrl: imgurl, // 分享图标
+						            success: function () { 
+						                alert("分享成功")
+						            },
+						            cancel: function () { 
+						                alert("分享失败")
+						            }
+						        });
+						         
+						        wx.onMenuShareAppMessage({
+						            title: title, // 分享标题
+						            desc: desc, // 分享描述
+						            link: url2, // 分享链接
+						            imgUrl: imgurl, // 分享图标
+						            type: '', // 分享类型,music、video或link，不填默认为link
+						            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+						            success: function () { 
+						                alert("分享成功")
+						            },
+						            cancel: function () { 
+						                alert("分享失败")
+						            }
+						        });
+						    });
 						}
 					}
 				});
 				
 			})
-			function wxstart(data, url){
-			    var url = url;  //分享的文章地址
-			    var appId = data.appid;
-			    var timestamp = data.timeStamp;
-			    var nonceStr = data.nonceStr;
-			    var signature = data.signature;
-			    wx.config({
-			        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-			        appId: appId, // 必填，公众号的唯一标识
-			        timestamp: timestamp, // 必填，生成签名的时间戳
-			        nonceStr: nonceStr, // 必填，生成签名的随机串
-			        signature: signature,// 必填，签名，见附录1
-			        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-			    });
-			     
-			    wx.ready(function(){
-			        var imgurl = $("#erweima").attr("src");
-			        var title = 'taxi跑腿平台';
-			        var desc = 'taxi跑腿平台';
-			        wx.onMenuShareTimeline({
-			            title: title, // 分享标题
-			            desc: desc, // 分享描述
-			            link: url, // 分享链接
-			            imgUrl: imgurl, // 分享图标
-			            success: function () { 
-			                alert("分享成功")
-			            },
-			            cancel: function () { 
-			                alert("分享失败")
-			            }
-			        });
-			         
-			        wx.onMenuShareAppMessage({
-			            title: title, // 分享标题
-			            desc: desc, // 分享描述
-			            link: url, // 分享链接
-			            imgUrl: imgurl, // 分享图标
-			            type: '', // 分享类型,music、video或link，不填默认为link
-			            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-			            success: function () { 
-			                alert("分享成功")
-			            },
-			            cancel: function () { 
-			                alert("分享失败")
-			            }
-			        });
-			    });
-			}
+
 		</script>
 	</body>
 </html>

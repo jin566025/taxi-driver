@@ -21,4 +21,4 @@ footer{width: 100%;bottom: 0;position: fixed;border-top: 1px solid gainsboro;}
 
 
 .disabled{pointer-events: none;cursor: default;opacity: 0.6;background-color: #111111}
-.tip{color: orangered;visibility: hidden;}
+.tip{color: orangered;visibility: hidden;font-size: 1.4rem;}

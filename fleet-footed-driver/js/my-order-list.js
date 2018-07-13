@@ -77,11 +77,14 @@ $(function(){
 							state = "进行中";
 							stateStr = "已为您开启了最佳配送路线";
 						}else if(list[i].state==1){
-							state = "不知道1";
-							stateStr = "不知道1";
+							state = "未接单";
+							stateStr = "未接单";
 						}else if(list[i].state==3){
 							state = "已完成";
 							stateStr = "当前还未对租客进行评价";
+						}else if(list[i].state==4){
+							state = "投诉中";
+							stateStr = "当前租客对您投诉";
 						}else if(list[i].state==5){
 							state = "结算中";
 							stateStr = "任务正在结算中";

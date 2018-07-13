@@ -164,19 +164,33 @@
 									var targetLng2 =  data.deliveryAddressLongitude;
 									var targetLat1 = data.taskAddressLatitude;
 									var targetLng1 = data.taskAddressLongitude;
-									driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1));
-									driving2.search(new AMap.LngLat(targetLng1, targetLat1), new AMap.LngLat(targetLng2, targetLat2));
-									setTimeout(function(){
-										var time = $(".planTitle p");
-										var distance1 = $(time[0]).text();
-										var distance2 = $(time[1]).text();
-					
-										var pattern =new RegExp("\\((.| )+?\\)","igm");
-										distance1 = distance1.match(pattern)
-										distance2 = distance2.match(pattern)
-										$("#position1").html(distance1);
-										
-									},500)
+//									driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1));
+//									driving2.search(new AMap.LngLat(targetLng1, targetLat1), new AMap.LngLat(targetLng2, targetLat2));
+//									setTimeout(function(){
+//										var time = $(".planTitle p");
+//										var distance1 = $(time[0]).text();
+//										var distance2 = $(time[1]).text();
+//					
+//										var pattern =new RegExp("\\((.| )+?\\)","igm");
+//										distance1 = distance1.match(pattern)
+//										distance2 = distance2.match(pattern)
+//										$("#position1").html(distance1);
+//										
+//									},500)
+									driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1),function(){
+
+										driving2.search(new AMap.LngLat(targetLng1, targetLat1), new AMap.LngLat(targetLng2, targetLat2),function(){
+											var time = $(".planTitle p");
+											var distance1 = $(time[0]).text();
+											//var distance2 = $(time[1]).text();
+						
+											var pattern =new RegExp("\\((.| )+?\\)","igm");
+											distance1 = distance1.match(pattern)
+											distance2 = "("+data.distance+"公里)"
+											$("#position1").html(distance1);
+											$("#position2").html(distance2);
+										});
+									});
 								}
 							},
 							error:function(){}
