@@ -6,7 +6,8 @@
 .customer-img{width: 5rem;height: 5rem;border-radius: 50%;overflow: hidden;}
 .customer-img img{width:5rem;height: 5rem;border-radius: 50%;}
 .customer-content{flex: 1;color: rgba(150, 150, 150, 1);text-align: left;font-family: Arial;font-size: 1.4rem;padding-left: 1rem;}
-.customer-go{margin-top: 1rem;width: 4rem;height: 2rem;line-height: 2rem;border-radius: 4px;background-color: rgba(43, 152, 252, 1);color: rgba(255, 255, 255, 1);font-size:1rem;text-align: center;font-family: Microsoft Yahei;}
+.customer-go{margin-top: 1rem;width: 5rem;height: 2rem;line-height: 2rem;border-radius: 4px;background-color: rgba(43, 152, 252, 1);color: rgba(255, 255, 255, 1);font-size:1rem;text-align: center;font-family: Microsoft Yahei;}
+.customer-gos{width: 5rem;}
 .customer-content p{height: 2rem;text-align: left;font-family: Arial;}
 .customer-content p a{vertical-align: middle;}
 .customer-content img{height: 1.4rem;vertical-align: middle;margin-left: 1rem;}

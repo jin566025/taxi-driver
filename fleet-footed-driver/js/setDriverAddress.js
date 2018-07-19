@@ -28,6 +28,5 @@ map.plugin('AMap.Geolocation', function() {
 function onComplete(data) {
     sessionStorage.setItem("driverLng",data.position.getLng());
     sessionStorage.setItem("driverLat",data.position.getLat());
-	$("#shadow").fadeOut(500);
-	$("#getAddress").fadeOut(500)
+	
 }

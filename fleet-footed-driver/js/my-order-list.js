@@ -69,6 +69,8 @@ $(function(){
 			success:function(data){
 				console.log(data)
 				if(data.msg=="成功"){
+					$("#shadow").fadeOut(500);
+					$("#getAddress").fadeOut(500)
 					var list = data.listDTO;
 					for(var i=0;i<list.length;i++){
 						var startTime = timeFormatter(list[i].statrTime);

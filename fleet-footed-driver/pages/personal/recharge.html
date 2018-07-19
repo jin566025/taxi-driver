@@ -16,37 +16,159 @@
 		</header>
 		
 		<div class="recharge-content">
-			<p>
+			<p id="username2">
 				<a>充值用户：</a>
-				<a>麦布奇</a>
+				<a id="username"></a>
 			</p>
 			<p>
 				<a>账户余额：</a>
-				<a></a>
+				<a id="money"></a>
 			</p>
 			<p>
 				<a>充值金额：</a>
-				<a><input type="text" placeholder="请输入充值金额" /></a>
+				<a><input id="business" style="font-size: 14px;" type="number" placeholder="请输入充值金额" /></a>
 			</p>
-			<p>选择支付方式</p>
+			<!--<p>选择支付方式</p>-->
 			<p class="select-recharge clearfix">
-				<a class="select-recharge-title">微信充值</a>
-				<img class="select-recharge-img" src="../../img/toRight2.png" />
+				<a>支付方式：</a>
+				<a><input disabled="disabled" type="text" placeholder="微信充值" /></a>
+				<!--<img class="select-recharge-img" src="../../img2/toRight2.png" />-->
 			</p>
 		</div>
 		
 		<div class="shadow"></div>
-		<div class="dialog absolute-center">
-			<p class="dialog-title">提现金额</p>
-			<input class="dialog-input" type="text" placeholder="请输入金额"/>
-			<div class="dialog-btn clearfix">
-				<div class="dialog-btns dialog-btns1 fl box-sizing">取消</div>
-				<div class="dialog-btns dialog-btns2 fl">确认</div>
-			</div>
-		</div>
+
 		<div class="footer-zanwei"></div>
-		<div class="footer">立即充值</div>
-		<script src="../../js/jquery-3.0.0.js"></script>
+		<div class="footer" id="chongzhi">立即充值</div>
+		<img src="../../img/loading.gif" id="loading" class="absolute-center" style="height: 4rem;display: none;" />
+		<script type="text/javascript" src="../../js/jquery-3.0.0.js"></script>
 		<script type="text/javascript" src="../../js/secondCheck.js" ></script>
+		<script type="text/javascript" src="../../js/url.js" ></script>
+		<script>
+			$(function(){
+				var drivernickname = localStorage.getItem("drivernickname");
+				$("#username").html(drivernickname);
+				var balance = parseFloat(sessionStorage.getItem("balance"));
+				balance = balance.toFixed(2);
+				$("#money").html(balance);
+				
+				$('#business').bind('input propertychange', function() {
+					var value = $(this).val();
+			        var array = value.split(".");
+			        if((array.length >1 && array[1].length > 2) || array.length >2){
+			            value = array[0] + "." +array[1].substr(0,2);
+			            $(this).val(value);
+			        }
+				}); 
+	
+				$("#chongzhi").click(function(){
+					var userId = localStorage.getItem("driverId");
+					var money = parseFloat($("#business").val());
+					if(!money){
+						alert("充值金额不能为0")
+						return false;
+					}
+					userId = parseInt(userId);
+					var dataArray = {};
+					dataArray.paywaterUserId = userId;
+					dataArray.paywaterUserType = 0;
+					dataArray.paywaterUserName = drivernickname;
+					dataArray.paywaterMoney = money;
+					//$(this).css("pointer-events","none");
+					$(".shadow,#loading").fadeIn();
+					console.log(dataArray)
+					//生成充值流水id
+					$.ajax({
+						type:"post",
+						url:url_path+"/Paywater/sava.json",
+						data:dataArray,
+						dataType:"json",
+						async:false,
+						success:function(data){
+							console.log(data)
+							if(data.msg=="成功"){
+								var tradeType = "JSAPI";
+								var goods_body = "taxi跑腿-充值";
+								var businessType = 2;
+								var openidT = localStorage.getItem("openid");
+								console.log(openidT)
+								var paywaterId = data.paywaterId;
+								var dataArray2 = {};
+								dataArray2.tradeType = tradeType;
+								dataArray2.goods_body = goods_body;
+								dataArray2.businessType = businessType;
+								dataArray2.openidT = openidT;
+								dataArray2.id = paywaterId;
+								dataArray2.userId = userId;
+								//生成预支付Id
+								$.ajax({
+									type:"post",
+									url:url_path+"/pay/weixinprepaid.json",
+									data:dataArray2,
+									async:false,
+									dataType:"json",
+									success:function(data){
+										console.log(data)
+										if(data.msg=="成功"){
+											$(".shadow,#loading").fadeOut();
+											//调用微信支付控件完成支付
+											var param = data.resInfo;
+											var timeStamp = param.timeStamp.toString();
+											var package = param.package;
+											var noncestr = param.nonceStr;
+											var sign = param.paySign;
+											var signType = param.signType;
+											var appid = param.appId;
+											WeixinJSBridge.invoke(
+										       'getBrandWCPayRequest', {
+										           "appId":appid,               //公众号名称，由商户传入     
+										           "timeStamp":timeStamp,       //时间戳，自1970年以来的秒数     
+										           "nonceStr":noncestr,         //随机串     
+										           "package":package,     
+										           "signType":signType,         //微信签名方式：     
+										           "paySign":sign               //微信签名 
+										       },
+										       function(res){
+										            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+										            	window.location.href="http://taxidriver.nbzhidun.com/pages/personal/balance.html"
+										            	$.ajax({
+															type:"post",
+															url:url_path+"/user/saveAccountstream.json",
+															async:false,
+															data:{
+																"userId":userId,
+																"money":money,
+																"useraccountOperationType":0,
+																"useraccountMode":0
+															},
+															dataType:"json",
+															success:function(data){}
+														});
+										           		
+										            }else{
+										           		$("#chongzhi").css("pointer-events","visible")
+										            }
+										       }
+										    );  
+										}     
+									},
+									error:function(xml){
+										console.log(xml)
+									}
+								});
+								
+							}else{alert(data.msg)}
+							
+							
+						},
+						error:function(xml){
+							console.log(xml)
+						}
+						
+					});
+					
+				})
+			})
+		</script>
 	</body>
 </html>

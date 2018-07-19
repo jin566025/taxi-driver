@@ -55,7 +55,9 @@
 				$(".dialog-btns").click(function(){
 					$(".shadow,.dialog").fadeOut(500)
 				})
-				
+				$(".footer").click(function(){
+					window.location.href='recharge.html'
+				})
 				var pageNo = 1;
 				var pageSize = 10;
 				loadAccountStream(driverId,pageNo,pageSize);
@@ -81,8 +83,8 @@
 						dataType:"json",
 						success:function(data){
 							if(data.stateCode==0){
-								console.log(data)
-								$(".balance-p4").html(data.balance)
+								$(".balance-p4").html((data.balance).toFixed(2));
+								sessionStorage.setItem("balance",data.balance);
 								var listDTO = data.listDTO;
 								if(listDTO.length!==10){
 									$(".nomore").html("---加载完毕---").removeClass("hasmore")

@@ -89,6 +89,8 @@ $(function(){
 				console.log(data)
 				
 				if(data.msg=="成功"){
+					$("#shadow").fadeOut(500);
+					$("#getAddress").fadeOut(500)
 					var list = data.listDTO;
 					if(list.length!==30){
 						$(".nomore").html("---加载完毕---").removeClass("hasmore")

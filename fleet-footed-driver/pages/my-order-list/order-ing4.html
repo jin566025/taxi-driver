@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="../../css/map.css" />
 	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Autocomplete,AMap.Driving"></script>
 	    <script type="text/javascript" src="../../js/map.js" ></script>
+	    <script type="text/javascript" src="../../js/setDriverAddress.js" ></script>
 	</head>
 	<body>
 		<div id='container'></div>
@@ -75,7 +76,10 @@
 					</p>
 					<p id="order-number" class="phone-number">123456789</p>
 				</div>
-				<div class="customer-go">导航</div>
+				<div class="customer-gos">
+					<div  class="customer-go customer-go1">导航至顾客</div>
+					<div  class="customer-go customer-go2">导航目的地</div>
+				</div>
 			</div>
 			<div class="customer-bottom clearfix">
 				<div class="customer-navs customer-navs2 box-sizing">
@@ -117,6 +121,7 @@
 		<script type="text/javascript" src="../../js/iosSelect.js" ></script>
 		<script type="text/javascript" src="../../js/url.js" ></script>
 		<script type="text/javascript" src="../../js/order-ing.js" ></script>
+		
 		<script>
 			function ContentUp(){
 				$(".section3").css("bottom","19rem");
@@ -144,8 +149,8 @@
 										//已完成
 										$(".submit").hide();
 										$("#showBank").html("我要评价").attr("id","toAccess")
-									}else if(data.state==2){
-										
+									}else if(data.state==4){
+										$(".submit").css({"pointer-events":"none","background-color":"gainsboro"})
 									}
 									
 								
@@ -168,18 +173,10 @@
 									var targetLng2 =  data.deliveryAddressLongitude;
 									var targetLat1 = data.taskAddressLatitude;
 									var targetLng1 = data.taskAddressLongitude;
-//									driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1));
-//									setTimeout(function(){
-//	    								var time = $(".planTitle p");
-//										var distance1 = $(time[0]).text();
-//										var distance2 = data.distance;
-//	
-//										var pattern =new RegExp("\\((.| )+?\\)","igm");
-//										distance1 = distance1.match(pattern)
-//										//distance2 = distance2.match(pattern)
-//										$("#position1").html(distance1);
-//										$("#position2").html("("+distance2+"公里)");
-//	    							},500)
+									sessionStorage.setItem("targetLng1s",targetLng1);
+									sessionStorage.setItem("targetLat1s",targetLat1);
+									sessionStorage.setItem("targetLng2s",targetLng2);
+									sessionStorage.setItem("targetLat2s",targetLat2);
 									
 									driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1),function(){
 

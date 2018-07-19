@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="../../css/complain.css" />
 		<style>
 			.datas{display: none;}
+			.uppic-input {position: absolute;top: 0;left: 0;width: 100%;height: 100%;opacity: 0;}
 		</style>
 	</head>
 	<body>
@@ -32,7 +33,7 @@
 			<div class="complain-pic clearfix">
 				<div class="complain-pics box-sizing">
 					<a>+</a>
-					<input name="img" id="upimg" type="file" />
+					<input class="uppic-input" name="img" id="upimg" type="file" />
 				</div>
 				<!--<div class="complain-pics box-sizing">+</div>
 				<div class="complain-pics box-sizing">+</div>-->
@@ -68,10 +69,10 @@
 					var id = window.location.href.split("=")[1];
 					
 					$("#data1").val(id);
-					$("#data2").val(userId);
-					$("#data3").val(1);
+					$("#data2").val(driverId);
+					$("#data3").val(0);
 					$("#data4").val(content);
-					$("#data6").val(0);
+					$("#data6").val(1);
 //					var driverId = window.location.href.split("=")[2];
 					var formData  = new FormData();
 					formData.append("id", $('input[name="id"]').val());
@@ -80,7 +81,6 @@
 					formData.append("content", $('input[name="content"]').val());
 					formData.append("img", $('input[name="img"]')[0].files[0]);
 					formData.append("comlaintType", $('input[name="comlaintType"]').val());
-					console.log(formData)
 					$.ajax({
 						type:"post",
 						url:url_path+"/mission/complaint.json",

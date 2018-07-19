@@ -8,10 +8,11 @@
 		<link rel="stylesheet" href="../../css/common-73369df58f.css" />
 		<link rel="stylesheet" href="../../css/list-deaed613b8.css" />
 		<link rel="stylesheet" href="../../css/iosSelect-6e182791d9.css" />
-		<link rel="stylesheet" href="../../css/order-786485122a.css" />
+		<link rel="stylesheet" href="../../css/order-01bd8c7a20.css" />
 		<link rel="stylesheet" href="../../css/map-11e21d52ce.css" />
 	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Autocomplete,AMap.Driving"></script>
 	    <script type="text/javascript" src="../../js/map-c35636d2be.js" ></script>
+	    <script type="text/javascript" src="../../js/setDriverAddress-8b35eac235.js" ></script>
 	</head>
 	<body>
 		<div id='container'></div>
@@ -76,7 +77,10 @@
 					</p>
 					<p id="order-number" class="phone-number">123456789</p>
 				</div>
-				<div class="customer-go">导航</div>
+				<div class="customer-gos">
+					<div  class="customer-go customer-go1">导航至顾客</div>
+					<div  class="customer-go customer-go2">导航目的地</div>
+				</div>
 			</div>
 			<div class="customer-bottom clearfix">
 				<div class="customer-navs customer-navs2 box-sizing">
@@ -117,7 +121,8 @@
 <!--		<script type="text/javascript" src="../../js/loadmap-187bdcfea7.js" ></script>-->
 		<script type="text/javascript" src="../../js/iosSelect-5c7970a48b.js" ></script>
 		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
-		<script type="text/javascript" src="../../js/order-ing-679806e785.js" ></script>
+		<script type="text/javascript" src="../../js/order-ing-72472c28ed.js" ></script>
+		
 		<script>
 			function ContentUp(){
 				$(".section3").css("bottom","22rem");
@@ -127,6 +132,8 @@
 				$(".section3").css("bottom","5rem");
 				$(".section2").css("bottom","-20rem")
 			}
+			
+			
 			$(function(){
 				orderDetail(url_path);
 				function orderDetail(url_path){
@@ -145,8 +152,8 @@
 										//已完成
 										$(".submit").hide();
 										$("#showBank").html("我要评价").attr("id","toAccess")
-									}else if(data.state==2){
-										
+									}else if(data.state==4){
+										$(".submit").css({"pointer-events":"none","background-color":"gainsboro"})
 									}
 									
 									
@@ -171,8 +178,12 @@
 									var targetLng2 =  data.deliveryAddressLongitude;
 									var targetLat1 = data.taskAddressLatitude;
 									var targetLng1 = data.taskAddressLongitude;
+									sessionStorage.setItem("targetLng1s",targetLng1);
+									sessionStorage.setItem("targetLat1s",targetLat1);
+									sessionStorage.setItem("targetLng2s",targetLng2);
+									sessionStorage.setItem("targetLat2s",targetLat2);
+									
 									driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1),function(){
-
 										driving2.search(new AMap.LngLat(targetLng1, targetLat1), new AMap.LngLat(targetLng2, targetLat2),function(){
 											var time = $(".planTitle p");
 											var distance1 = $(time[0]).text();

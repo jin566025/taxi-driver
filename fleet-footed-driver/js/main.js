@@ -32,6 +32,8 @@ $(function(){
 		$(".amap-logo,.amap-geolocation-con,.amap-controls").hide();
 	},1000)
 
+
+
 	$("#dialog-cancle").click(function(){
 		$(".shadow,.confirm").fadeOut();
 	})

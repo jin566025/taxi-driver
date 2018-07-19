@@ -65,6 +65,12 @@ function cancleOrder(){
 	var id = window.location.href.split("=")[1];
 	var driverId = localStorage.getItem("driverId");
 	var content = $("#selectHide").text();
+
+	if(content){
+		
+	}else{
+		content="联系不到顾客"
+	}
 	$.ajax({
 		type:"post",
 		url:url_path+"/mission/drivercancel.json",
@@ -76,6 +82,7 @@ function cancleOrder(){
 		},
 		dataType:"json",
 		success:function(data){
+			
 			if(data.msg=="成功"){
 				window.location.href='../../my-order-list.html'
 			}
@@ -103,3 +110,20 @@ var driving2 = new AMap.Driving({
     map: map,
     panel: "panel"
 }); 
+
+$(".customer-go1").click(function(){
+	var startLng = sessionStorage.getItem("driverLng");
+	var startLat = sessionStorage.getItem("driverLat");
+	var endLng = sessionStorage.getItem("targetLng1s");
+	var endLat = sessionStorage.getItem("targetLat1s");
+
+	window.location.href="http://m.amap.com/navi/?start="+startLng+","+startLat+"&dest="+endLng+","+endLat+"&destName=%E8%B7%AF%E7%BA%BF&naviBy=car&key=92f74f742ad7c49509ed2f32b516743d"
+})
+$(".customer-go2").click(function(){
+	var startLng = sessionStorage.getItem("driverLng");
+	var startLat = sessionStorage.getItem("driverLat");
+	var endLng = sessionStorage.getItem("targetLng2s");
+	var endLat = sessionStorage.getItem("targetLat2s");
+
+	window.location.href="http://m.amap.com/navi/?start="+startLng+","+startLat+"&dest="+endLng+","+endLat+"&destName=%E8%B7%AF%E7%BA%BF&naviBy=car&key=92f74f742ad7c49509ed2f32b516743d"
+})
