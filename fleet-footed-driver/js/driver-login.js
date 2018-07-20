@@ -118,6 +118,8 @@ function getLoginSMS(url){
 				console.log(data)
 				if(data.msg=="成功"){
 					
+				}else{
+					$("#tips1").css("visibility","visible").html(data.msg);
 				}
 			},
 			error:function(){}
