@@ -66,6 +66,8 @@
 							if(data.msg=="成功"){
 								alert("评价成功")
 								window.location.href="../../my-order-list.html"
+							}else{
+								alert(data.msg)
 							}
 						},
 						error:function(xhr){

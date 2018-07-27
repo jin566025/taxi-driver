@@ -1,6 +1,6 @@
 // var url_path = "http://192.168.16.100:8080/Taxi/rest";
-//var url_path = "http://taxiweb.nbzhidun.com/Taxi/rest";
-var url_path = "http://zyy71897.yicp.io:50353/Taxi/rest";
+var url_path = "http://taxiweb.nbzhidun.com/Taxi/rest";
+//var url_path = "http://zyy71897.yicp.io:50353/Taxi/rest";
 $(".footer-nav").click(function(){
 	var index = $(this).index()
 	if(index == 0){

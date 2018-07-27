@@ -46,7 +46,7 @@
 		<div id="nonceStr" style="display: none;"></div>
 		<div id="signature" style="display: none;"></div>
 		<script type="text/javascript" src="../../js/jquery-3-b36670e5ea.0.0.js" ></script>
-		<script type="text/javascript" src="../../js/url-81b50c1c15.js" ></script>
+		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
 		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script>
 			$(function(){
@@ -66,16 +66,17 @@
 //					wxstart(dataArray, "http://taxicustomer.nbzhidun.com/pages2/personal/share.html");
 				})
 				
-				var hrefs = window.location.href.split("openid=")[1];
-				var openid = hrefs.split("?path=")[0];
-				var path = hrefs.split("?path=")[1];
+				var openid = localStorage.getItem("openid");
+				var path = localStorage.getItem("driverImg");
+				urls = encodeURIComponent(urls);
 				$.ajax({
 					type:"post",
 					url:url_path+"/createCodeImg.json",
 					data:{
 						"userOpenid":openid,
 						"type":1,
-						"logoPicPath":path
+						"logoPicPath":path,
+						"url":urls
 					},
 					dataType:"json",
 					success:function(data){
@@ -105,7 +106,7 @@
 						        var imgurl = $("#erweima").attr("src");
 						        var title = 'taxi跑腿平台';
 						        var desc = 'taxi跑腿平台,取送件、代购、打车、代驾';
-						         var url2 = "http://taxicustomer.nbzhidun.com/index.html?userOpenid="+openid+"?type=2";
+						        var url2 = "http://taxidriver.nbzhidun.com/index.html?userOpenid="+openid+"?type=1";
 						        wx.onMenuShareTimeline({
 						            title: title, // 分享标题
 						            desc: desc, // 分享描述

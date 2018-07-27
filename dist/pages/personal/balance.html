@@ -46,7 +46,7 @@
 		<script type="text/javascript" src="../../js/jquery-3-b36670e5ea.0.0.js" ></script>
 
 		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script>
-		<script type="text/javascript" src="../../js/url-81b50c1c15.js" ></script>
+		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
 		<script>
 			$(function(){
 				$(".balance-submit").click(function(){
@@ -82,18 +82,21 @@
 						},
 						dataType:"json",
 						success:function(data){
+							console.log(data)
 							if(data.stateCode==0){
 								$(".balance-p4").html((data.balance).toFixed(2));
 								sessionStorage.setItem("balance",data.balance);
+								
 								var listDTO = data.listDTO;
 								if(listDTO.length!==10){
 									$(".nomore").html("---加载完毕---").removeClass("hasmore")
 								}
 								for(var i=0;i<listDTO.length;i++){
+									var createtime = timeFormatter(listDTO[i].createtime);
 									var html = '<div class="detail-content flex-box">'+
 													'<div class="detail-content-left">'+
 														'<p class="cash">'+listDTO[i].typeName+'</p>'+
-														'<p class="cash-time">'+listDTO[i].createtime+'</p>'+
+														'<p class="cash-time">'+createtime+'</p>'+
 													'</div>'+
 													'<div class="detail-content-mid">'+listDTO[i].typeName+'</div>'+
 													'<div class="detail-content-right">'+listDTO[i].money+'</div>'+
@@ -105,7 +108,34 @@
 						error:function(){}
 					});
 				}
-				
+				function timeFormatter(value) {
+				    var da = new Date(parseInt(value));
+				    var month = da.getMonth()+1;
+				    if(month<10){
+				    	month = "0"+month
+				    }
+				    
+				    var dates = da.getDate();
+				    if(dates<10){
+				    	dates = "0"+dates
+				    }
+				    
+				    var hour = da.getHours();
+				    if(hour<10){
+				    	hour = "0"+hour
+				    }
+				    
+				    var minute = da.getMinutes();
+				    if(minute<10){
+				    	minute = "0"+minute
+				    }
+				    
+				    var second = da.getSeconds();
+				    if(second<10){
+				    	second = "0"+second
+				    }
+				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
+				}
 			})
 		</script>
 	</body>

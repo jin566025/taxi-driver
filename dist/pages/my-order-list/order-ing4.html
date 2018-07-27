@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="../../css/common-73369df58f.css" />
 		<link rel="stylesheet" href="../../css/list-deaed613b8.css" />
 		<link rel="stylesheet" href="../../css/iosSelect-6e182791d9.css" />
-		<link rel="stylesheet" href="../../css/order-01bd8c7a20.css" />
+		<link rel="stylesheet" href="../../css/order-d1a31a6d94.css" />
 		<link rel="stylesheet" href="../../css/map-11e21d52ce.css" />
 	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Autocomplete,AMap.Driving"></script>
 	    <script type="text/javascript" src="../../js/map-c35636d2be.js" ></script>
@@ -85,7 +85,7 @@
 				<div class="customer-navs customer-navs2 box-sizing">
 					<a id="customerTel">联系租客</a>
 				</div>
-				<div class="customer-navs customer-navs2 box-sizing complain">我要申诉</div>
+				<div class="customer-navs customer-navs2 box-sizing complain" style="pointer-events: none;">暂无投诉</div>
 				<div class="customer-navs" id="showBank">取消订单</div>
 			</div>
 		</div>
@@ -113,14 +113,41 @@
 		<div class="shadow"></div>
 		<div id="panel" style="display: none;" ></div>
 		<div id="selectHide" style="display: none;"></div>
+			<div class="cancle-reason box-sizing">
+			<p>
+				<a>评价星级：</a>
+				<a class="reason-type">
+					<img class="star-assess" src="../../img/star-assess2.png" />
+					<img class="star-assess" src="../../img/star-assess2.png" />
+					<img class="star-assess" src="../../img/star-assess2.png" />
+					<img class="star-assess" src="../../img/star-assess2.png" />
+					<img class="star-assess" src="../../img/star-assess2.png" />
+				</a>
+			</p>
+			<p id="pj-content"></p>
+
+		</div>
+		
+		<div class="complaining">
+			<p>
+				<a>投诉类型：</a>
+				<a class="complaining-type">投诉司机</a>
+			</p>
+			<p id="complaining-content"></p>
+			
+			<div class="complain-img-container clearfix">
+				<img id="complain-img" class="complain-img fl" />
+
+			</div>
+		</div>
 		<script type="text/javascript" src="../../js/jquery-3-b36670e5ea.0.0.js" ></script>
 		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script> 
 		<script type="text/javascript" src="../../js/swiper-1d74106378.js" ></script>
 		<script type="text/javascript" src="../../js/main-74ce595931.js" ></script>
 <!--		<script type="text/javascript" src="../../js/loadmap-187bdcfea7.js" ></script>-->
 		<script type="text/javascript" src="../../js/iosSelect-5c7970a48b.js" ></script>
-		<script type="text/javascript" src="../../js/url-81b50c1c15.js" ></script>
-		<script type="text/javascript" src="../../js/order-ing-72472c28ed.js" ></script>
+		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
+		<script type="text/javascript" src="../../js/order-ing-d00645f722.js" ></script>
 		
 		<script>
 			function ContentUp(){
@@ -149,7 +176,15 @@
 										//已完成
 										$(".submit").hide();
 										$("#showBank").html("我要评价").attr("id","toAccess")
+										if(data.commentstate==2 ){
+											$(".cancle-reason").show();
+											$("#toAccess").html("已评价").css("pointer-events","none");
+										}else if(data.commentstate==1 || data.commentstate==3){
+											$(".cancle-reason").show();
+										}
 									}else if(data.state==4){
+										$(".complain").html("我要申诉").css("pointer-events","visible");
+										$(".complaining").show()
 										$(".submit").css({"pointer-events":"none","background-color":"gainsboro"})
 									}
 									
@@ -157,16 +192,25 @@
 									$("#order-award").html(data.finish);
 									$("#order-price").html(data.award)
 									$("#deliveryAddress").html(data.deliveryAddress);
-									$("#order-name").html(data.driverNickname);
-									$("#order-score").html(data.driverGrade);
-									$("#driverTel").attr("href","tel:"+data.driverTel+"");
 									if(data.taskAddress){
 										$("#tipinput").html(data.taskAddress);
 									}else{
 										$("#tipinput").html("如不填写，由司机决定");
 									}
 								
-									$("#order-img").attr("src",data.driverImgUrl)
+									$("#customerTel").attr("href","tel:"+data.userphone+"");
+									$("#order-number").html(data.userphone);
+									$("#order-name").html(data.userName);
+									var grade = data.grade
+									if(grade){
+										
+									}else{
+										grade="0"
+									}
+									$("#order-score").html(grade);
+									$("#order-img").attr("src",data.userImgUrl)
+									
+									
 									var driverLng = sessionStorage.getItem("driverLng");
 									var driverLat = sessionStorage.getItem("driverLat");
 									var targetLat2 =  data.deliveryAddressLatitude;

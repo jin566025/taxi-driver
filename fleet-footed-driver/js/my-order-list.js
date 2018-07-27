@@ -24,9 +24,12 @@ $(function(){
 	
 	
 	var pageNo = 1;
-	var pageSize = 999999999;
-	loadDriverList(driverId,0,pageNo,pageSize)
-
+	var pageSize = 9999;
+	loadDriverList(driverId,0,pageNo,pageSize);
+	
+	setInterval(function(){
+		loadDriverList(driverId,0,pageNo,pageSize)
+	},10000)
 	$(".header-nav-div").click(function(){
 		if($(this).hasClass("header-nav-div-active")){
 			
@@ -67,7 +70,6 @@ $(function(){
 			},
 			dataType:"json",
 			success:function(data){
-				console.log(data)
 				if(data.msg=="成功"){
 					$("#shadow").fadeOut(500);
 					$("#getAddress").fadeOut(500)
@@ -84,6 +86,11 @@ $(function(){
 						}else if(list[i].state==3){
 							state = "已完成";
 							stateStr = "当前还未对租客进行评价";
+							if(list[i].commentstate==2){
+								stateStr = "司机已评价";
+							}else if(list[i].commentstate==1){
+								stateStr = "用户已评价";
+							}
 						}else if(list[i].state==4){
 							state = "投诉中";
 							stateStr = "当前租客对您投诉";

@@ -53,13 +53,16 @@
 				$("#money").html(balance);
 				
 				$('#business').bind('input propertychange', function() {
-					var value = $(this).val();
+					$(this).val($(this).val().replace(/[^\-?\d.]/g,''));
+				 	var value = $(this).val();
 			        var array = value.split(".");
+			        console.log(array)
 			        if((array.length >1 && array[1].length > 2) || array.length >2){
 			            value = array[0] + "." +array[1].substr(0,2);
 			            $(this).val(value);
 			        }
 				}); 
+	
 	
 				$("#chongzhi").click(function(){
 					var userId = localStorage.getItem("driverId");
@@ -71,12 +74,11 @@
 					userId = parseInt(userId);
 					var dataArray = {};
 					dataArray.paywaterUserId = userId;
-					dataArray.paywaterUserType = 0;
+					dataArray.paywaterUserType =1;
 					dataArray.paywaterUserName = drivernickname;
 					dataArray.paywaterMoney = money;
 					//$(this).css("pointer-events","none");
 					$(".shadow,#loading").fadeIn();
-					console.log(dataArray)
 					//生成充值流水id
 					$.ajax({
 						type:"post",
@@ -85,7 +87,6 @@
 						dataType:"json",
 						async:false,
 						success:function(data){
-							console.log(data)
 							if(data.msg=="成功"){
 								var tradeType = "JSAPI";
 								var goods_body = "taxi跑腿-充值";
@@ -108,7 +109,7 @@
 									async:false,
 									dataType:"json",
 									success:function(data){
-										console.log(data)
+										
 										if(data.msg=="成功"){
 											$(".shadow,#loading").fadeOut();
 											//调用微信支付控件完成支付
@@ -131,26 +132,17 @@
 										       function(res){
 										            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
 										            	window.location.href="http://taxidriver.nbzhidun.com/pages/personal/balance.html"
-										            	$.ajax({
-															type:"post",
-															url:url_path+"/user/saveAccountstream.json",
-															async:false,
-															data:{
-																"userId":userId,
-																"money":money,
-																"useraccountOperationType":0,
-																"useraccountMode":0
-															},
-															dataType:"json",
-															success:function(data){}
-														});
+										            	
 										           		
 										            }else{
 										           		$("#chongzhi").css("pointer-events","visible")
 										            }
 										       }
 										    );  
-										}     
+										} else{
+											alert(data.msg);
+											$(".shadow,#loading").fadeOut();
+										}
 									},
 									error:function(xml){
 										console.log(xml)

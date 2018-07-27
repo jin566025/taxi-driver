@@ -15,10 +15,9 @@
 	<body>
 		<form>
 		<input type="text" name="id" class="datas" id="data1" />
-		<input type="text" name="userId" class="datas" id="data2" />
+		<input type="text" name="driverId" class="datas" id="data2" />
 		<input type="text" name="usertype" class="datas" id="data3" />
 		<input type="text" name="content" class="datas" id="data4" />
-		
 		<input type="text" name="comlaintType" class="datas" id="data6" />
 		<div class="complain-content">
 			<div class="complain-type clearfix">
@@ -28,7 +27,7 @@
 			</div>
 			<div class="complain-main">
 				<div class="complain-main-top">申诉内容</div>
-				<textarea id="complain-content" class="complain-main-bottom" placeholder="请输入要申诉的内容......"></textarea>
+				<textarea style="font-size: 14px;" id="complain-content" class="complain-main-bottom" placeholder="请输入要申诉的内容......"></textarea>
 			</div>
 			<div class="complain-pic clearfix">
 				<div class="complain-pics box-sizing">
@@ -44,7 +43,7 @@
 		</form>
 		<script src="../../js/jquery-3-b36670e5ea.0.0.js"></script>
 		<script type="text/javascript" src="../../js/secondCheck-761d6dfe8b.js" ></script>
-		<script type="text/javascript" src="../../js/url-81b50c1c15.js" ></script>
+		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
 		<script>
 			$(function(){
 				var complainWidth = $(".complain-pics").width();
@@ -58,25 +57,23 @@
 					var img_url = this.files[0];
 					var reader = new FileReader();
 					reader.onload = function(e){
-						$(".complain-pics").append('<img class="up-img" <img src="'+e.target.result+'" />')
+						$(".complain-pics").append('<img class="up-img" src="'+e.target.result+'" />')
 					}
 					reader.readAsDataURL(img_url);
 				})
 				$(".complain").click(function(){
 					var typeName = $(".complain-types2-active").text();
 					var content = $("#complain-content").val();
-					
 					var id = window.location.href.split("=")[1];
-					
 					$("#data1").val(id);
 					$("#data2").val(driverId);
-					$("#data3").val(0);
+					$("#data3").val(1);
 					$("#data4").val(content);
-					$("#data6").val(1);
+					$("#data6").val(0);
 //					var driverId = window.location.href.split("=")[2];
 					var formData  = new FormData();
 					formData.append("id", $('input[name="id"]').val());
-					formData.append("userId", $('input[name="userId"]').val());
+					formData.append("driverId", $('input[name="driverId"]').val());
 					formData.append("usertype", $('input[name="usertype"]').val());
 					formData.append("content", $('input[name="content"]').val());
 					formData.append("img", $('input[name="img"]')[0].files[0]);

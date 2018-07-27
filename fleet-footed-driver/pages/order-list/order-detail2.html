@@ -133,11 +133,17 @@
 								$("#pickuptime").html(timeFormatter(data.pickupTime))
 								$("#message").html(data.message)
 								
-								$("#customer-img").attr("src",data.customerImg);
-								$("#order-name").html(data.customerName);
-								$("#order-score").html(data.customerGrade);
-								$("#order-number").html(data.customerTel);
-								$("#customerTel").attr("href","tel:"+data.customerTel+"");
+								$("#customerTel").attr("href","tel:"+data.userphone+"");
+								$("#order-number").html(data.userphone);
+								$("#order-name").html(data.userName);
+								var grade = data.grade
+								if(grade){
+									
+								}else{
+									grade="0"
+								}
+								$("#order-score").html(grade);
+								$("#customer-img").attr("src",data.userImgUrl)
 								
 								
 								
@@ -148,9 +154,7 @@
 									deliveryAddress="如不填写，由司机决定"
 								}
 								$("#deliveryAddress").html(data.taskAddress);
-								$("#order-name").html(data.driverNickname);
 								$("#tipinput").html(deliveryAddress);
-								$("#order-score").html(data.driverGrade);
 								$("#type-str3").html(data.message);
 								var driverLng = sessionStorage.getItem("driverLng");
 								var driverLat = sessionStorage.getItem("driverLat");
