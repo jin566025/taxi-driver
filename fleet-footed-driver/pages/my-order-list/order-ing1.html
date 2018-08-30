@@ -97,8 +97,8 @@
 		<div class="confirm">
 			<p class="confirm-tip">是否完成订单</p>
 			<div class="confirm-container clearfix">
-				<div class="confirm-container-diolog box-sizing cancle">取消</div>
-				<div class="confirm-container-diolog sure">确认</div>
+				<div class="confirm-container-diolog box-sizing cancle" id="cancle">取消</div>
+				<div class="confirm-container-diolog sure" id="ok">确认</div>
 			</div>
 		</div>
 		
@@ -181,7 +181,7 @@
 										$(".submit").hide();
 										$("#showBank").html("我要评价").attr("id","toAccess");
 										if(data.commentstate==2 ){
-											$(".cancle-reason").show();
+											//$(".cancle-reason").show();
 											$("#toAccess").html("已评价").css("pointer-events","none");
 											
 										}else if(data.commentstate==1 || data.commentstate==3){

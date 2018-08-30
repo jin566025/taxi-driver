@@ -90,8 +90,8 @@
 		<div class="confirm">
 			<p class="confirm-tip">是否完成订单</p>
 			<div class="confirm-container clearfix">
-				<div class="confirm-container-diolog box-sizing cancle">取消</div>
-				<div class="confirm-container-diolog sure">确认</div>
+				<div class="confirm-container-diolog box-sizing cancle" id="cancle">取消</div>
+				<div class="confirm-container-diolog sure" id="ok">确认</div>
 			</div>
 		</div>
 		
@@ -139,9 +139,9 @@
 		<script type="text/javascript" src="../../js/swiper-1d74106378.js" ></script>
 		<script type="text/javascript" src="../../js/main-74ce595931.js" ></script>
 <!--		<script type="text/javascript" src="../../js/loadmap-187bdcfea7.js" ></script>-->
-		<script type="text/javascript" src="../../js/iosSelect-5c7970a48b.js" ></script>
+		<script type="text/javascript" src="../../js/iosSelect-c869abb4b6.js" ></script>
 		<script type="text/javascript" src="../../js/url-0b5e97ca16.js" ></script>
-		<script type="text/javascript" src="../../js/order-ing-d00645f722.js" ></script>
+		<script type="text/javascript" src="../../js/order-ing-818f1a8d8e.js" ></script>
 		
 		<script>
 			function ContentUp(){
@@ -171,7 +171,7 @@
 										$(".submit").hide();
 										$("#showBank").html("我要评价").attr("id","toAccess")
 										if(data.commentstate==2){
-											$(".cancle-reason").show();
+											//$(".cancle-reason").show();
 											$("#toAccess").html("已评价").css("pointer-events","none");
 										}else if(data.commentstate==1 || data.commentstate==3){
 											$(".cancle-reason").show();

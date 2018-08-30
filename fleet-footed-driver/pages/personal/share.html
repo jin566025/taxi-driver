@@ -68,6 +68,7 @@
 				
 				var openid = localStorage.getItem("openid");
 				var path = localStorage.getItem("driverImg");
+				var urls = location.href.split("#")[0];
 				urls = encodeURIComponent(urls);
 				$.ajax({
 					type:"post",

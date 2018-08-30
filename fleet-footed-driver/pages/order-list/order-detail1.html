@@ -73,7 +73,7 @@
 					</p>
 					<p id="order-number" class="phone-number"></p>
 				</div>
-				<div class="customer-go">导航</div>
+				<div class="customer-go">导航至顾客</div>
 			</div>
 			<div class="customer-mid">
 				<p class="pickuptime">
@@ -174,7 +174,8 @@
 								var driverLat = sessionStorage.getItem("driverLat");
 								var targetLat1 =  data.deliveryAddressLatitude;
 								var targetLng1 =  data.deliveryAddressLongitude;
-								
+								sessionStorage.setItem("customerLng",targetLng1);
+								sessionStorage.setItem("customerLat",targetLat1);
 								var targetLat2 = data.taskAddressLatitude;
 								var targetLng2 = data.taskAddressLongitude;
 								driving.search(new AMap.LngLat(driverLng, driverLat), new AMap.LngLat(targetLng1, targetLat1));

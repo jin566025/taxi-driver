@@ -18,6 +18,15 @@ $(".cancle").click(function(){
 	$(".shadow,.confirm").fadeOut(500);
 })
 $(".submit").click(function(){
+	$(".confirm,.shadow").show();
+})
+$("#cancle").click(function(){
+	$(".confirm,.shadow").hide();
+})
+$("#ok").click(function(){
+	completeOrder(taskId,driverId)
+})
+function completeOrder(taskId,driverId){
 	$.ajax({
 		type:"post",
 		url:url_path+"/mission/driver/ok.json",
@@ -28,16 +37,13 @@ $(".submit").click(function(){
 		},
 		dataType:"json",
 		success:function(data){
-			console.log(taskId)
-			console.log(data)
 			if(data.msg=="成功"){
 				window.location.href="../../my-order-list.html"
 			}
 		},
 		error:function(){}
 	});
-})
-
+}
 var showBankDom = document.querySelector('#showBank');
 var bankIdDom = document.querySelector('#bankId');
 showBankDom.addEventListener('click', function () {
@@ -66,12 +72,12 @@ function cancleOrder(){
 	var id = window.location.href.split("=")[1];
 	var driverId = localStorage.getItem("driverId");
 	var content = $("#selectHide").text();
-
 	if(content){
 		
 	}else{
 		content="联系不到顾客"
 	}
+	
 	$.ajax({
 		type:"post",
 		url:url_path+"/mission/drivercancel.json",

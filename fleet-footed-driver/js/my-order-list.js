@@ -88,7 +88,7 @@ $(function(){
 							stateStr = "当前还未对租客进行评价";
 							if(list[i].commentstate==2){
 								stateStr = "司机已评价";
-							}else if(list[i].commentstate==1){
+							}else if(list[i].commentstate==1 || list[i].commentstate==3){
 								stateStr = "用户已评价";
 							}
 						}else if(list[i].state==4){

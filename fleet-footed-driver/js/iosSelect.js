@@ -1109,7 +1109,10 @@
 			Array.prototype.slice.call(sureDom).forEach(function (item, index) {
 				item.addEventListener('click', function () {
 					self.close();
-					cancleOrder();
+					setTimeout(function(){
+						cancleOrder();
+					},500)
+					
 				});
 			});
 			Array.prototype.slice.call(closeDom).forEach(function (item, index) {
